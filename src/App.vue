@@ -7,6 +7,7 @@
     <EmployeeTable
       v-bind:employees="employees"
       @delete:employee="deleteEmployee"
+      @edit:employee="editEmployee"
     />
   </div>
 </template>
@@ -54,6 +55,9 @@ export default {
     deleteEmployee(id) {
       this.employees = this.employees.filter((employee) => employee.id !== id);
     },
+    editEmployee(id, updatedEmployee) {
+      this.employees = this.employees.map(employee => employee.id === id ? updatedEmployee : employee)
+    }
   },
 };
 </script>
