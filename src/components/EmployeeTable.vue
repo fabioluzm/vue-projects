@@ -21,10 +21,10 @@
           <td v-else>{{ employee.email }}</td>
           <td v-if="editing === employee.id">
             <button class="sucess-button" @click="editEmployee(employee)">Save</button>
-            <button class="muted-button" @click="editing = null">Cancel</button>
+            <button class="muted-button" @click="cancelEdit(employee)">Cancel</button>
           </td>
           <td v-else>
-            <button @click="editMode(employee.id)">Edit</button>
+            <button @click="editMode(employee)">Edit</button>
             <button v-on:click="$emit('delete:employee', employee.id)">
               Delete
             </button>
@@ -47,14 +47,19 @@ export default {
     }
   },
   methods: {
-    editMode(id) {
-      this.editing = id
+    editMode(employee) {
+      this.cachedEmployee = Object.assign({}, employee)
+      this.editing = employee.id
+    },
+    cancelEdit(employee) {
+      Object.assign(employee, this.cachedEmployee)
+      this.editing = null
     },
     editEmployee(employee) {
       if (employee.name === '' || employee.email === '') return;
       this.$emit('edit:employeee', employee.id, employee);
       this.editing = null;
-    }
+    },
   }
 };
 </script>
