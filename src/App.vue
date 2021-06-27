@@ -1,81 +1,41 @@
 <template>
   <div id="app">
     <Header />
-    <AddTodo @add-todo="addTodo"/>
-    <Todos :todos="todos" @delete-todo="deleteTodo"/>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import Header from './components/layout/Header.vue'
-import Todos from './components/Todos.vue'
-import AddTodo from './components/AddTodo.vue'
-
 export default {
   name: 'App',
   components: {
-    Header,
-    Todos,
-    AddTodo,
-  },
-  data() {
-    return {
-      todos: []
-    }
-  },
-  methods: {
-    async getTodos() {
-      const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5');
-      const data = await res.json();
-      this.todos = data;
-    },
-    async addTodo(newTodo) {
-      const res = await fetch('https://jsonplaceholder.typicode.com/todos', {
-        method: 'POST',
-        headers: {
-          "Content-type": "application/json"
-        },
-        body: JSON.stringify({newTodo})
-      });
-      const data = await res.json();
-      this.todos = [...this.todos, data];
-    },
-    async deleteTodo(id) {
-      await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-        method: 'DELETE'
-      });
-      this.todos = this.todos.filter(todo => todo.id != id)
-    }
-  },
-  created() {
-    this.getTodos();
-  }
+    Header
+  }  
 }
 </script>
 
 <style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+/*
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    line-height: 1.4;
-  }
+#nav {
+  padding: 30px;
+}
 
-  .btn {
-    display: inline-block;
-    border:none;
-    background: #555;
-    color: #fff;
-    padding: 7px 20px;
-    cursor: pointer;
-  }
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+*/
 
-  .btn:hover {
-    background: #666;
-  }
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
 </style>
