@@ -32,7 +32,7 @@ export default {
         headers: {
           "Content-type": "application/json"
         },
-        body: JSON.stringify({newTodo})
+        body: JSON.stringify(newTodo)
       });
       const data = await res.json();
       this.todos = [...this.todos, data];
